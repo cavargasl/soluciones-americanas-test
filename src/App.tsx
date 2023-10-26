@@ -1,10 +1,12 @@
+import { AuthProvider } from "./provider/AuthProvider"
+import Router from "./routers"
 
 function App() {
 
   return (
-    <>
-      <h1>working</h1>
-    </>
+    <AuthProvider>
+      <Router />
+    </AuthProvider>
   )
 }
 
