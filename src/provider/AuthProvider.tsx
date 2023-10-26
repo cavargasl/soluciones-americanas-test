@@ -1,7 +1,18 @@
 import { Token, User } from "@/types";
 import { createContext, useContext, useEffect, useState } from "react";
 
-const AuthContext = createContext({});
+type AuthContextType = {
+  userData?: User,
+  setToken: (token: Token) => void,
+  setUser: (userData: User) => void,
+  logOut: () => void
+}
+
+const AuthContext = createContext<AuthContextType>({
+  setToken: () => { },
+  setUser: () => { },
+  logOut: () => { }
+});
 
 export function useAuth() {
   return useContext(AuthContext)
@@ -19,8 +30,8 @@ export function AuthProvider({ children }: AuthProviderProps) {
   }
 
   useEffect(() => {
-    if(userData && token) return setUser(userData)
-    if(!token) return setUser(undefined)
+    if (userData && token) return setUser(userData)
+    if (!token) return setUser(undefined)
   }, [token, userData]);
 
   const value = {
