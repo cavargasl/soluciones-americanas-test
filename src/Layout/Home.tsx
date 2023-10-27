@@ -51,14 +51,14 @@ export default function Home() {
             {
               navItems.map(item => (
                 <li key={item.path}>
-                  <Button disabled={disabledLink(item.path, userData)} className="w-full" variant={"link"} onClick={() => navigate(item.path)}>
+                  <Button disabled={disabledLink(item.path, userData)} className="w-full" variant={"link"} onClick={() => navigate(item.path)} data-cy={item.path}>
                     {item.name}
                   </Button>
                 </li>
               ))
             }
           </ul>
-          {userData && <Button onClick={() => logout()} className="w-full mt-4">Logout</Button>}
+          {userData && <Button onClick={() => logout()} className="w-full mt-4" data-cy="logout">Logout</Button>}
         </nav>
       </aside>
       <main className="p-8">
