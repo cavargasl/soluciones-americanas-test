@@ -44,7 +44,7 @@ export default function NewUser() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md m-auto">
         <legend className="text-2xl font-bold pb-4">New User</legend>
         <Input type="text" placeholder="Name" {...register("name")} />
         <Input type="text" placeholder="Job" {...register("job")} />

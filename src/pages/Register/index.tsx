@@ -43,7 +43,7 @@ export default function Register() {
 
   return (
     <>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md">
+      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-4 max-w-md m-auto">
         <legend className="text-2xl font-bold pb-4">Register</legend>
         <Input type="text" placeholder="Username" {...register("username")} />
         <Input type="email" placeholder="Email" {...register("email")} />
