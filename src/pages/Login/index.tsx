@@ -23,7 +23,7 @@ export default function Login() {
     try {
       const response = await LoginApi(data)
       if (response.data.token) {
-        //localStorage.setItem('token', response.data.token)
+        localStorage.setItem('token', response.data.token)
         setUser(data)
         setToken(response.data.token)
         navigate(links.users, { replace: true })

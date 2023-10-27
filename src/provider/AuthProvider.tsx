@@ -4,7 +4,7 @@ import { createContext, useContext, useEffect, useState } from "react";
 type AuthContextType = {
   userData?: User,
   setToken: (token: Token) => void,
-  setUser: (userData: User) => void,
+  setUser: (userData?: User) => void,
   logOut: () => void
 }
 

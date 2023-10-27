@@ -29,7 +29,15 @@ function disabledLink(link: string, userData?: User) {
 
 export default function Home() {
   const navigate = useNavigate()
-  const { userData } = useAuth()
+  const { userData, setToken, setUser } = useAuth()
+
+  function logout() {
+    localStorage.removeItem("token")
+    setToken("")
+    setUser(undefined)
+    navigate(links.login, { replace: true })
+  }
+
   return (
     <div className="grid grid-cols-[min-content,1fr] md:grid-cols-[250px,1fr]">
       <aside className="h-screen bg-muted p-8 px-5 md:px-8">
@@ -45,6 +53,7 @@ export default function Home() {
               ))
             }
           </ul>
+          {userData && <Button onClick={() => logout()} className="w-full mt-4">Logout</Button>}
         </nav>
       </aside>
       <main className="p-8">
