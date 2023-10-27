@@ -1,3 +1,4 @@
+import { Home } from '@/Layout'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
 
@@ -6,8 +7,8 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/" >
-          <Route index element={<p>working</p>} />
+        <Route path="/" element={<Home />} >
+          
         </Route>
 
       </Routes>
