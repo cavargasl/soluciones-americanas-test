@@ -19,6 +19,7 @@
     --destructive: 0 62.8% 30.6%;
     --destructive-foreground: 0 85.7% 97.3%;
     
+    --border: 240 5.9% 90%;
     --radius: 0.5rem;
   }
 
@@ -27,7 +28,7 @@
 
 @layer base {
   * {
-    @apply box-border;
+    @apply box-border border-border;
   }
 
   body {
