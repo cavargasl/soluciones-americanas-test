@@ -17,6 +17,10 @@ const navItems = [
     path: links.register,
   },
   {
+    name: "new user",
+    path: links.newUser,
+  },
+  {
     name: "list of users",
     path: links.users,
   },
@@ -24,6 +28,7 @@ const navItems = [
 function disabledLink(link: string, userData?: User) {
   if (link === links.users && !userData) return true
   if (link === links.login && userData) return true
+  if (link === links.register && userData) return true
   return false
 }
 

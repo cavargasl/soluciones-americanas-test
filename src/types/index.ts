@@ -19,9 +19,10 @@ export type ListUsers = {
 
 export type Token = string;
 
-export const links: Readonly<{ [key: string]: string }> = {
-  login: "/login",
-  register: "/register",
-  home: "/",
-  users: "/users",
+export enum links {
+  login = "/login",
+  register = "/register",
+  home = "/",
+  users = "/users",
+  newUser = "/newUser",
 }
