@@ -2,6 +2,7 @@ import { Alert, AlertDescription, AlertTitle } from "@/components/ui/Alert";
 import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { authSchema } from "@/lib/validations/Auth";
+import { useAuth } from "@/provider/AuthProvider";
 import { User, links } from "@/types";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AxiosError } from "axios";
@@ -12,6 +13,7 @@ import { LoginApi } from "./services";
 
 export default function Login() {
   const navigate = useNavigate()
+  const { setToken, setUser } = useAuth()
   const [customError, setCustomError] = useState()
   const { register, handleSubmit, formState: { errors } } = useForm<User>({
     resolver: zodResolver(authSchema)
@@ -22,6 +24,8 @@ export default function Login() {
       const response = await LoginApi(data)
       if (response.data.token) {
         //localStorage.setItem('token', response.data.token)
+        setUser(data)
+        setToken(response.data.token)
         navigate(links.users, { replace: true })
       }
     } catch (error) {
