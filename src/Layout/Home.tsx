@@ -1,26 +1,35 @@
-import { buttonVariants } from "@/components/ui/Button";
-import { cn } from "@/lib/utils";
-import { Link, Outlet } from "react-router-dom";
+import { Button } from "@/components/ui/Button";
+import { useAuth } from "@/provider/AuthProvider";
+import { User, links } from "@/types";
+import { Outlet, useNavigate } from "react-router-dom";
 
 const navItems = [
   {
     name: "home",
-    path: "/",
+    path: links.home,
   },
   {
     name: "login",
-    path: "/login",
+    path: links.login,
   },
   {
     name: "register",
-    path: "/register",
+    path: links.register,
   },
   {
     name: "list of users",
-    path: "/users",
+    path: links.users,
   },
 ]
+function disabledLink(link: string, userData?: User) {
+  if (link === links.users && !userData) return true
+  if (link === links.login && userData) return true
+  return false
+}
+
 export default function Home() {
+  const navigate = useNavigate()
+  const { userData } = useAuth()
   return (
     <div className="grid grid-cols-[min-content,1fr] md:grid-cols-[250px,1fr]">
       <aside className="h-screen bg-muted p-8 px-5 md:px-8">
@@ -29,7 +38,9 @@ export default function Home() {
             {
               navItems.map(item => (
                 <li key={item.path}>
-                  <Link to={item.path} className={cn(buttonVariants({ variant: "link" }), "w-full")}>{item.name}</Link>
+                  <Button disabled={disabledLink(item.path, userData)} className="w-full" variant={"link"} onClick={() => navigate(item.path)}>
+                    {item.name}
+                  </Button>
                 </li>
               ))
             }
