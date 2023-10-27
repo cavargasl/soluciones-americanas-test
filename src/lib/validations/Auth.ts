@@ -1,4 +1,4 @@
-import { User } from "@/types"
+import { NewUser, User } from "@/types"
 import { z } from "zod"
 
 const passwordSchema = z
@@ -50,4 +50,13 @@ export const registerSchema: z.Schema<User & { confirmPassword: string }> = z.ob
 }).refine((data) => data.password === data.confirmPassword, {
   message: "Passwords don't match",
   path: ["confirmPassword"],
+})
+
+export const newUserSchema: z.Schema<NewUser> = z.object({
+  name: z.string().min(3, {
+    message: "Name must be at least 3 characters long",
+  }),
+  job: z.string().min(3, {
+    message: "Job must be at least 3 characters long",
+  }),
 })

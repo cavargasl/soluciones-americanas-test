@@ -16,6 +16,10 @@ export type ListUsers = {
   total_pages: number;
   data: FullUser[];
 }
+export type NewUser = {
+  name: string;
+  job: string;
+}
 
 export type Token = string;
 
