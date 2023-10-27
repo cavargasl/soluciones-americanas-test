@@ -1,4 +1,5 @@
 import { Home } from '@/Layout'
+import ListUsers from '@/pages/ListUsers'
 import Login from '@/pages/Login'
 import Register from '@/pages/Register'
 import NewUser from '@/pages/newUser'
@@ -13,10 +14,10 @@ export default function Router() {
       <Routes>
         <Route path={links.home} element={<Home />} >
           <Route index element={<h1>Home View</h1>} />
-          <Route path={links.login} element={<Login />} />
+          <Route path={links.login} element={<PublicRouter><Login /></PublicRouter>} />
           <Route path={links.register} element={<PublicRouter><Register /></PublicRouter>} />
           <Route path={links.newUser} element={<NewUser />} />
-          <Route path={links.users} element={<PrivateRouter><h1>Users view</h1></PrivateRouter>} />
+          <Route path={links.users} element={<PrivateRouter><ListUsers /></PrivateRouter>} />
         </Route>
       </Routes>
     </BrowserRouter>

@@ -3,7 +3,7 @@ export type User = {
   email: string;
   password: string;
 }
-export type FullUser = User & {
+export type FullUser = Pick<User, "email"> & {
   id: number;
   first_name: string;
   last_name: string;
