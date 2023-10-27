@@ -9,7 +9,7 @@ export default function ListUsers() {
   })
   return (
     <>
-      <Table className="border">
+      <Table className="border max-w-5xl m-auto">
         <TableHeader>
           <TableRow>
             <TableHead>Avatar</TableHead>
@@ -20,11 +20,13 @@ export default function ListUsers() {
         </TableHeader>
         <TableBody>
           {
-            isLoading ? <TableRow>Loading...</TableRow> :
-              isError ? <TableRow>Error</TableRow> :
+            isLoading ? <TableRow><TableCell>Loading...</TableCell></TableRow> :
+              isError ? <TableRow><TableCell>Error</TableCell></TableRow> :
                 data?.data.map(item => (
                   <TableRow key={item.id}>
-                    <TableCell>{item.avatar}</TableCell>
+                    <TableCell>
+                      <img src={item.avatar} alt={`Image of ${item.first_name}`} className="w-20 h-20 object-cover" />
+                    </TableCell>
                     <TableCell>{item.first_name}</TableCell>
                     <TableCell>{item.last_name}</TableCell>
                     <TableCell>{item.email}</TableCell>
