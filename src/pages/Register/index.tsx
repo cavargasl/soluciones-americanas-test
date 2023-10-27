@@ -3,40 +3,42 @@ import { Button } from "@/components/ui/Button";
 import { Input } from "@/components/ui/Input";
 import { registerSchema } from "@/lib/validations/Auth";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutation } from "@tanstack/react-query";
 import { AxiosError } from "axios";
 import { useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
+import { registerUser } from "./services";
 
 type Inputs = z.infer<typeof registerSchema>
 export default function Register() {
-  const [customError, setCustomError] = useState()
-  const { register, handleSubmit, formState: { errors } } = useForm<Inputs>({
+  const [customError, setAlert] = useState<{ message: string, type: "error" | "success" }>()
+  const { register, handleSubmit, formState: { errors }, reset } = useForm<Inputs>({
     resolver: zodResolver(registerSchema)
   })
-  console.log("🚀 ~ file: index.tsx:16 ~ Register ~ errors:", errors)
-
-  function onSubmit(data: Inputs) {
-    try {
-      console.log("🚀 ~ file: index.tsx:20 ~ onSubmit ~ data:", data)
-      /* const response = await LoginApi(data)
-      if (response.data.token) {
-        localStorage.setItem('token', response.data.token)
-        setUser(data)
-        setToken(response.data.token)
-        navigate(links.users, { replace: true })
-      } */
-    } catch (error) {
-      if (error instanceof AxiosError) {
-        if (error.response?.status === 400) {
-          setCustomError(error.response.data.error)
+  const { isPending, mutate } = useMutation({
+    mutationFn: registerUser,
+  })
+  function onSubmit({ email, password, username }: Inputs) {
+    mutate({ email, password, username }, {
+      onSuccess: () => {
+        reset()
+        //optional chaining in react-query
+      },
+      onError: (error) => {
+        if (error instanceof AxiosError) {
+          if (error.response?.status === 400) {
+            return setAlert({ message: error.response.data.error, type: "error" })
+          }
+          return setAlert({ message: "Something went wrong", type: "error" })
         }
+      },
+      onSettled: () => {
+        setTimeout(() => {
+          setAlert(undefined)
+        }, 4000)
       }
-    } finally {
-      (setTimeout(() => {
-        setCustomError(undefined)
-      }, 4000))
-    }
+    })
   }
 
   return (
@@ -47,7 +49,7 @@ export default function Register() {
         <Input type="email" placeholder="Email" {...register("email")} />
         <Input type="password" placeholder="Password" {...register("password")} />
         <Input type="password" placeholder="Confirm Password" {...register("confirmPassword")} />
-        <Button type="submit">Register</Button>
+        <Button type="submit" disabled={isPending}>Register</Button>
         {
           Object.keys(errors).length > 0 && (
             <Alert variant="destructive">
@@ -60,9 +62,9 @@ export default function Register() {
         }
         {
           customError && (
-            <Alert variant="destructive">
-              <AlertTitle>Error</AlertTitle>
-              <AlertDescription>{customError}</AlertDescription>
+            <Alert variant={customError.type === "error" ? "destructive" : "default"}>
+              <AlertTitle>{customError.type === "error" ? 'Error' : 'Success'}</AlertTitle>
+              <AlertDescription>{customError.message}</AlertDescription>
             </Alert>
           )
         }
