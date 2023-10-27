@@ -1,4 +1,5 @@
 import { Home } from '@/Layout'
+import { links } from '@/types'
 import { lazy } from 'react'
 import { BrowserRouter, Route, Routes } from 'react-router-dom'
 
@@ -9,11 +10,11 @@ export default function Router() {
     <BrowserRouter>
       <Routes>
 
-        <Route path="/" element={<Home />} >
+        <Route path={links.home} element={<Home />} >
           <Route index element={<h1>Home View</h1>} />
-          <Route path="login" element={<Login />} />
-          <Route path="register" element={<h1>Register view</h1>} />
-          <Route path="users" element={<h1>Users view</h1>} />
+          <Route path={links.login} element={<Login />} />
+          <Route path={links.register} element={<h1>Register view</h1>} />
+          <Route path={links.users} element={<h1>Users view</h1>} />
         </Route>
 
       </Routes>
